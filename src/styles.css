@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+    font-size: 16px;
+}
+
+body {
+    /* font-family: 'Nunito', sans-serif; */
+    /* font-family: 'Open Sans Condensed', sans-serif; */
+    /* font-family: 'Josefin Sans', sans-serif; */
+    font-family: 'Exo 2', sans-serif;
+;
+}
+
+.main-container{
+    margin-top: 40px;
+  }
+  
+  /* Drop Zone */
+  .drop-zone { 
+      border: dotted 3px lightgray; 
+      opacity: 0.5; 
+      color: #666; 
+      text-align: center 
+  }
+  
+  .file-over { 
+      border: dotted 3px dodgerblue; 
+  }
+  
+  .table { 
+      margin-top: 30px; 
+  }
+  
+  .text-green { 
+      color: green 
+  }
+  
