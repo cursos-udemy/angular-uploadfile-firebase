@@ -9,11 +9,11 @@ import { UploadFirebaseService } from '../../services/upload-firebase.service';
 })
 export class UploadComponent implements OnInit {
 
-  public files:FileItem[];
+  public fileItemList:FileItem[];
   public isMouseIntoDropZone:boolean;
 
   constructor(private uploadFirebaseService:UploadFirebaseService) {
-    this.files = [];
+    this.fileItemList = [];
     this.isMouseIntoDropZone = false;
    }
 
@@ -23,7 +23,7 @@ export class UploadComponent implements OnInit {
 
   public uploadImages() {
     console.log("uploadImages");
-    this.uploadFirebaseService.uploadToFirebase(this.files);
+    this.uploadFirebaseService.uploadToFirebase(this.fileItemList);
   }
 
 }
