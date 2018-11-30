@@ -27,7 +27,6 @@ export class UploadFirebaseService {
 
   public uploadToFirebase(files:FileItem[]) {
     console.log(files);
-    
   }
 
 }

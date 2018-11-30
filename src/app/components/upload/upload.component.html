@@ -21,12 +21,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>AAAA</td>
-          <td>12Mb</td>
+        <tr *ngFor="let fileItem of fileItemList">
+          <td>{{fileItem.filename}}</td>
+          <td>{{fileItem.file.size / 1024 / 1024 | number: '.2-2'}} MB</td>
           <td>
               <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25">25%</div>
+                  <div class="progress-bar" role="progressbar" aria-valuenow="25"
+                  [ngStyle]="{'width': fileItem.progress + '%'}"
+                  >{{fileItem.progress}}%</div>
                 </div>            
           </td>
         </tr>
