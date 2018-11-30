@@ -11,6 +11,9 @@ import { UploadComponent } from './components/upload/upload.component';
 // servicios
 import { UploadFirebaseService } from './services/upload-firebase.service';
 
+// directivas
+import { NgDropFilesDirective } from './directives/ng-drop-files.directive';
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -22,7 +25,8 @@ import { environment } from '../environments/environment';
   declarations: [
     AppComponent,
     FilesComponent,
-    UploadComponent
+    UploadComponent,
+    NgDropFilesDirective
   ],
   imports: [
     BrowserModule,

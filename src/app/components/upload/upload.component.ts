@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FileItem } from 'src/app/models/file-item';
+import { UploadFirebaseService } from '../../services/upload-firebase.service';
 
 @Component({
   selector: 'app-upload',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadComponent implements OnInit {
 
-  constructor() { }
+  public files:FileItem[];
+  public isMouseIntoDropZone:boolean;
+
+  constructor(private uploadFirebaseService:UploadFirebaseService) {
+    this.files = [];
+    this.isMouseIntoDropZone = false;
+   }
 
   ngOnInit() {
+  }
+
+
+  public uploadImages() {
+    console.log("uploadImages");
+    this.uploadFirebaseService.uploadToFirebase(this.files);
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import * as firebase from "firebase"
+import { FileItem } from '../models/file-item';
 
 
 @Injectable({
@@ -11,9 +12,22 @@ export class UploadFirebaseService {
 
   private PATH_IMAGES:string = "images";
 
-  constructor( private db: AngularFireStorage) { }
+  constructor( private storage: AngularFireStorage) { }
 
   private saveImage(image:any) {
-    this.db.upload("", "");
+
+    const file = image;
+    const filePath = 'name-your-file-path-here';
+    // const ref = this.storage.ref(filePath);
+    // const task = ref.put(file);
+
+    const task = this.storage.upload(filePath, file);
+    
   }
+
+  public uploadToFirebase(files:FileItem[]) {
+    console.log(files);
+    
+  }
+
 }
