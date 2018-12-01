@@ -1,32 +1,59 @@
-import { Injectable } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { Injectable } from "@angular/core";
 
-import * as firebase from "firebase"
-import { FileItem } from '../models/file-item';
+import { AngularFirestore } from "@angular/fire/firestore";
+import * as firebase from "firebase";
+import { FileItem } from "../models/file-item";
 
+export interface Item {
+  nombre: string;
+  url: string;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UploadFirebaseService {
+  private PATH_IMAGES: string = "images";
 
-  private PATH_IMAGES:string = "images";
+  constructor(private db: AngularFirestore) {}
 
-  constructor( private storage: AngularFireStorage) { }
-
-  private saveImage(image:any) {
-
-    const file = image;
-    const filePath = 'name-your-file-path-here';
-    // const ref = this.storage.ref(filePath);
-    // const task = ref.put(file);
-
-    const task = this.storage.upload(filePath, file);
-    
+  private saveImage(image: Item) {
+    this.db
+      .collection(`${this.PATH_IMAGES}`)
+      .add(image)
+      .then(() => console.log("guardo correctamente"))
+      .catch(error => console.error("Error save", error))
+      .finally(() => console.log("fin de guardar"));
   }
 
-  public uploadToFirebase(files:FileItem[]) {
-    console.log(files);
-  }
+  public uploadToFirebase(files: FileItem[]) {
+    const storageRef = firebase.storage().ref();
 
+    for (const fileItem of files) {
+      fileItem.uploadComplete = false;
+      if (fileItem.progress >= 100) {
+        continue;
+      }
+
+      const uploadTask: firebase.storage.UploadTask = storageRef
+        .child(`${this.PATH_IMAGES}/${fileItem.filename}`)
+        .put(fileItem.file);
+
+      uploadTask.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot: firebase.storage.UploadTaskSnapshot) => {
+          fileItem.progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        error => console.error("Error al subir archivo.", error),
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadUrl => {
+            fileItem.url = downloadUrl;
+            fileItem.uploadComplete = true;
+            this.saveImage({ nombre: fileItem.filename, url: fileItem.url });
+          });
+        }
+      );
+    }
+  }
 }

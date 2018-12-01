@@ -22,13 +22,11 @@ export class UploadComponent implements OnInit {
 
 
   public uploadImages() {
-    console.log("uploadImages");
     this.uploadFirebaseService.uploadToFirebase(this.fileItemList);
   }
 
   public cleanImages() {
     this.fileItemList = [];
-    
   }
 
 }

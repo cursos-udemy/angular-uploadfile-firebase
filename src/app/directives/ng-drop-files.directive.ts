@@ -58,9 +58,6 @@ export class NgDropFilesDirective {
         this.files.push( new FileItem(fileTemp));
       }
     }
-
-    console.log(this.files);
-    
   }
 
 

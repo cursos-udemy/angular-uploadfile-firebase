@@ -22,13 +22,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let fileItem of fileItemList">
-          <td>{{fileItem.filename}}</td>
+          <td [ngClass]="{'text-green': fileItem.uploadComplete}">{{fileItem.filename}}</td>
           <td>{{fileItem.file.size / 1024 / 1024 | number: '.2-2'}} MB</td>
           <td>
               <div class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuenow="25"
-                  [ngStyle]="{'width': fileItem.progress + '%'}"
-                  >{{fileItem.progress}}%</div>
+                  [ngStyle]="{'width': fileItem.progress + '%'}"></div>
                 </div>            
           </td>
         </tr>
