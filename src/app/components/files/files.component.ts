@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadFirebaseService, Item } from '../../services/upload-firebase.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-files',
@@ -7,7 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilesComponent implements OnInit {
 
-  constructor() { }
+  private items: Observable<Item[]>;
+  constructor(uploadFirebaseService:UploadFirebaseService) {
+    uploadFirebaseService.getImagesUploaded().subscribe( (data:any) => {
+        this.items = data
+    });
+  }
+
+
 
   ngOnInit() {
   }

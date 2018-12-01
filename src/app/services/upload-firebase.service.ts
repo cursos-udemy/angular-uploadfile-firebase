@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
 import * as firebase from "firebase";
 import { FileItem } from "../models/file-item";
 
@@ -13,9 +15,12 @@ export interface Item {
   providedIn: "root"
 })
 export class UploadFirebaseService {
+  private itemsCollection: AngularFirestoreCollection<Item>;
   private PATH_IMAGES: string = "images";
 
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore) {
+    this.itemsCollection = db.collection<Item>(`${this.PATH_IMAGES}`);
+  }
 
   private saveImage(image: Item) {
     this.db
@@ -55,5 +60,9 @@ export class UploadFirebaseService {
         }
       );
     }
+  }
+
+  public getImagesUploaded() {
+    return this.itemsCollection.valueChanges();
   }
 }
